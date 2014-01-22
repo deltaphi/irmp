@@ -105,6 +105,13 @@
 #  else
 #    error Wrong value for IRSND_OCx, choose IRSND_OC2A, IRSND_OC2B, IRSND_OC0A, or IRSND_OC0B in irsndconfig.h
 #  endif // IRSND_OCx
+#elif defined (__AVR_ATmega32U4__)                                  // ATmega32U4 uses OC0B = PD0
+#  if IRSND_OCx == IRSND_OC0B                                       // OC0B
+#    define IRSND_PORT_LETTER                       D
+#    define IRSND_BIT_NUMBER                        0
+#  else
+#    error Wrong value for IRSND_OCx, choose IRSND_OC2A, IRSND_OC2B, IRSND_OC0A, or IRSND_OC0B in irsndconfig.h
+#  endif // IRSND_OCx
 #elif defined (__AVR_ATmega48__)    \
    || defined (__AVR_ATmega88__)    \
    || defined (__AVR_ATmega88P__)   \
@@ -392,6 +399,7 @@ irsnd_on (void)
         TIM_CCxCmd(IRSND_TIMER, IRSND_TIMER_CHANNEL, TIM_CCx_Enable);      // enable OC-output (is being disabled in TIM_SelectOCxM())
         TIM_Cmd(IRSND_TIMER, ENABLE);                   // enable counter
 #  else                                                 // AVR
+#ifndef ARDUINO
 #    if   IRSND_OCx == IRSND_OC2                        // use OC2
         TCCR2 |= (1<<COM20)|(1<<WGM21);                 // toggle OC2 on compare match,  clear Timer 2 at compare match OCR2
 #    elif IRSND_OCx == IRSND_OC2A                       // use OC2A
@@ -407,6 +415,8 @@ irsnd_on (void)
 #    else
 #      error wrong value of IRSND_OCx
 #    endif // IRSND_OCx
+#endif // !ARDUINO
+	IRSND_PORT |= (1<<IRSND_BIT);                 // set IRSND_BIT to high
 #  endif // C18
 #endif // DEBUG
 
@@ -442,6 +452,7 @@ irsnd_off (void)
         TIM_SetCounter(IRSND_TIMER, 0);                 // reset counter value
 #  else //AVR
 
+#ifndef ARDUINO
 #    if   IRSND_OCx == IRSND_OC2                        // use OC2
         TCCR2 &= ~(1<<COM20);                           // normal port operation, OC2 disconnected.
 #    elif IRSND_OCx == IRSND_OC2A                       // use OC2A
@@ -457,6 +468,7 @@ irsnd_off (void)
 #    else
 #      error wrong value of IRSND_OCx
 #    endif // IRSND_OCx
+#endif // !ARDUINO
         IRSND_PORT  &= ~(1<<IRSND_BIT);                 // set IRSND_BIT to low
 #  endif //C18
 #endif // DEBUG
@@ -613,6 +625,7 @@ irsnd_init (void)
         IRSND_PORT &= ~(1<<IRSND_BIT);                                              // set IRSND_BIT to low
         IRSND_DDR |= (1<<IRSND_BIT);                                                // set IRSND_BIT to output
 
+#ifndef ARDUINO
 #    if   IRSND_OCx == IRSND_OC2                                                    // use OC2
         TCCR2 = (1<<WGM21);                                                         // CTC mode
 #       if AVR_PRESCALER == 8
@@ -645,6 +658,7 @@ irsnd_init (void)
 #      error wrong value of IRSND_OCx
 #    endif
         irsnd_set_freq (IRSND_FREQ_36_KHZ);                                         // default frequency
+#endif // !ARDUINO
 #  endif //PIC_C18
 #endif // DEBUG
 }

@@ -93,8 +93,8 @@
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
 #if defined (ATMEL_AVR)                                                 // use PB6 as IR input on AVR
-#  define IRMP_PORT_LETTER                      B
-#  define IRMP_BIT_NUMBER                       6
+#  define IRMP_PORT_LETTER                      D
+#  define IRMP_BIT_NUMBER                       1
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
  * Change hardware pin here for PIC C18 compiler

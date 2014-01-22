@@ -1,3 +1,5 @@
+/* main.c apparently clashes with arduino IDE */
+#ifndef ARDUINO
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
  * main.c - demo main module to test irmp decoder
  *
@@ -140,4 +142,5 @@ main (void)
     }
 }
 
+#endif
 #endif

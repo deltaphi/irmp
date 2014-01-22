@@ -1,0 +1,33 @@
+How to use the irmp-arduino code
+================================
+ 
+Note: this HOWTO is only tested on linux hosts, so if you work on another
+ 
+1) Download irmp-arduino
+   - if not already existing, create the ~/sketchbook/libraries directory
+   - cd ~/sketchbook/libraries
+   - git clone git@github.com:Boman/IRMPforArduino.git irmp
+2) Install TimerOne library (if it is not already installed)
+   - see http://arduino.cc/playground/Code/Timer1
+   - cd ~/sketchbook/libraries
+   - mkdir Timer1
+   - cd Timer1
+   - wget http://arduino-timerone.googlecode.com/files/TimerOne-v9.zip
+     (or a newer version if available, see the arduino.cc page above)
+   - unzip TimerOne-v9.zip
+   - rm TimerOne-v9.zip
+ 
+Now start your arduino GUI.
+Click File->Examples->irmp->irmp_arduino_example
+ 
+There you go! Connect your IR receiver module to digital pin 2 of the arduino
+pro micro and check the received data on the serial monitor (note: set it to
+9600 baud or change the SER_BAUD define in the code).
+
+The library is set for the Atmega32U4 (Arduino Micro).
+The receiver should be connected to PD1 (digital pin 2).
+The transmitter should be connected to PD0 (digital pin 3).
+ 
+Have a lot of fun!
+ 
+Falko Thomale
