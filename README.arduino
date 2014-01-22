@@ -27,6 +27,9 @@ pro micro and check the received data on the serial monitor (note: set it to
 The library is set for the Atmega32U4 (Arduino Micro).
 The receiver should be connected to PD1 (digital pin 2).
 The transmitter should be connected to PD0 (digital pin 3).
+
+You should notice that the signal on PD0 is not modulated with the typical 38
+kHz, since there were some problems with the pwm in arduino.
  
 Have a lot of fun!
  

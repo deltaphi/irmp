@@ -7,3 +7,5 @@ Version IRSND: 2.3.10 09.04.2013
 Dokumentation:
  
    http://www.mikrocontroller.net/articles/IRMP
+
+Port to Arduino see README.arduino
