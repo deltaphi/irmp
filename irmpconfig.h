@@ -6,7 +6,7 @@
  * Copyright (c) 2009-2015 Frank Meyer - frank(at)fli4l.de
  * Extensions for PIC 12F1820 W.Strobl 2014-07-20
  *
- * $Id: irmpconfig.h,v 1.136 2015/09/21 12:44:16 fm Exp $
+ * $Id: irmpconfig.h,v 1.135 2015/09/19 15:28:31 fm Exp $
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,17 +56,17 @@
 #define IRMP_SUPPORT_KASEIKYO_PROTOCOL          1       // Kaseikyo             >= 10000                 ~250 bytes
 
 // more protocols, enable here!                 Enable  Remarks                 F_INTERRUPTS            Program Space
-#define IRMP_SUPPORT_JVC_PROTOCOL               0       // JVC                  >= 10000                 ~150 bytes
-#define IRMP_SUPPORT_NEC16_PROTOCOL             0       // NEC16                >= 10000                 ~100 bytes
-#define IRMP_SUPPORT_NEC42_PROTOCOL             0       // NEC42                >= 10000                 ~300 bytes
-#define IRMP_SUPPORT_MATSUSHITA_PROTOCOL        0       // Matsushita           >= 10000                  ~50 bytes
-#define IRMP_SUPPORT_DENON_PROTOCOL             0       // DENON, Sharp         >= 10000                 ~250 bytes
-#define IRMP_SUPPORT_RC5_PROTOCOL               0       // RC5                  >= 10000                 ~250 bytes
-#define IRMP_SUPPORT_RC6_PROTOCOL               0       // RC6 & RC6A           >= 10000                 ~250 bytes
-#define IRMP_SUPPORT_IR60_PROTOCOL              0       // IR60 (SDA2008)       >= 10000                 ~300 bytes
-#define IRMP_SUPPORT_GRUNDIG_PROTOCOL           0       // Grundig              >= 10000                 ~300 bytes
-#define IRMP_SUPPORT_SIEMENS_PROTOCOL           0       // Siemens Gigaset      >= 15000                 ~550 bytes
-#define IRMP_SUPPORT_NOKIA_PROTOCOL             0       // Nokia                >= 10000                 ~300 bytes
+#define IRMP_SUPPORT_JVC_PROTOCOL               1       // JVC                  >= 10000                 ~150 bytes
+#define IRMP_SUPPORT_NEC16_PROTOCOL             1       // NEC16                >= 10000                 ~100 bytes
+#define IRMP_SUPPORT_NEC42_PROTOCOL             1       // NEC42                >= 10000                 ~300 bytes
+#define IRMP_SUPPORT_MATSUSHITA_PROTOCOL        1       // Matsushita           >= 10000                  ~50 bytes
+#define IRMP_SUPPORT_DENON_PROTOCOL             1       // DENON, Sharp         >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_RC5_PROTOCOL               1       // RC5                  >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_RC6_PROTOCOL               1       // RC6 & RC6A           >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_IR60_PROTOCOL              1       // IR60 (SDA2008)       >= 10000                 ~300 bytes
+#define IRMP_SUPPORT_GRUNDIG_PROTOCOL           1       // Grundig              >= 10000                 ~300 bytes
+#define IRMP_SUPPORT_SIEMENS_PROTOCOL           1       // Siemens Gigaset      >= 15000                 ~550 bytes
+#define IRMP_SUPPORT_NOKIA_PROTOCOL             1       // Nokia                >= 10000                 ~300 bytes
 
 // exotic protocols, enable here!               Enable  Remarks                 F_INTERRUPTS            Program Space
 #define IRMP_SUPPORT_BOSE_PROTOCOL              0       // BOSE                 >= 10000                 ~150 bytes
@@ -95,7 +95,7 @@
 #define IRMP_SUPPORT_PENTAX_PROTOCOL            0       // Pentax               >= 10000                 ~150 bytes
 #define IRMP_SUPPORT_S100_PROTOCOL              0       // S100                 >= 10000                 ~250 bytes
 #define IRMP_SUPPORT_ACP24_PROTOCOL             0       // ACP24                >= 10000                 ~250 bytes
-#define IRMP_SUPPORT_TECHNICS_PROTOCOL          0       // TECHNICS             >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_TECHNICS_PROTOCOL          1       // TECHNICS             >= 10000                 ~250 bytes
 #define IRMP_SUPPORT_RADIO1_PROTOCOL            0       // RADIO, e.g. TEVION   >= 10000                 ~250 bytes (experimental)
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,8 +103,8 @@
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
 #if defined (ATMEL_AVR) || defined (__AVR_XMEGA__)                      // use PB6 as IR input on AVR
-#  define IRMP_PORT_LETTER                      B
-#  define IRMP_BIT_NUMBER                       6
+#  define IRMP_PORT_LETTER                      C
+#  define IRMP_BIT_NUMBER                       1
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
  * Change hardware pin here for PIC C18 or XC8 compiler
@@ -178,7 +178,7 @@
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
 #ifndef IRMP_USE_CALLBACK
-#  define IRMP_USE_CALLBACK                     0       // 1: use callbacks. 0: do not. default is 0
+#  define IRMP_USE_CALLBACK                     1       // 1: use callbacks. 0: do not. default is 0
 #endif
 
 #endif // _IRMPCONFIG_H_
