@@ -3,11 +3,10 @@
  *
  * DO NOT INCLUDE THIS FILE, WILL BE INCLUDED BY IRMP.H!
  *
- * Copyright (c) 2009-2013 Frank Meyer - frank(at)fli4l.de
+ * Copyright (c) 2009-2015 Frank Meyer - frank(at)fli4l.de
+ * Extensions for PIC 12F1820 W.Strobl 2014-07-20
  *
- * $Id: irmpconfig.h,v 1.101 2013/04/09 12:02:51 fm Exp $
- *
- * ATMEGA88 @ 8 MHz
+ * $Id: irmpconfig.h,v 1.136 2015/09/21 12:44:16 fm Exp $
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +26,7 @@
  * Change F_INTERRUPTS if you change the number of interrupts per second,
  * Normally, F_INTERRUPTS should be in the range from 10000 to 15000, typical is 15000
  * A value above 15000 costs additional program space, absolute maximum value is 20000.
+ * On PIC with XC8/C18 Compiler, use 15151 as the correct value.
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
 #ifndef F_INTERRUPTS
@@ -52,17 +52,17 @@
 // typical protocols, disable here!             Enable  Remarks                 F_INTERRUPTS            Program Space
 #define IRMP_SUPPORT_SIRCS_PROTOCOL             1       // Sony SIRCS           >= 10000                 ~150 bytes
 #define IRMP_SUPPORT_NEC_PROTOCOL               1       // NEC + APPLE          >= 10000                 ~300 bytes
-#define IRMP_SUPPORT_SAMSUNG_PROTOCOL           1       // Samsung + Samsung32  >= 10000                 ~300 bytes
-#define IRMP_SUPPORT_MATSUSHITA_PROTOCOL        1       // Matsushita           >= 10000                  ~50 bytes
+#define IRMP_SUPPORT_SAMSUNG_PROTOCOL           1       // Samsung + Samsg32    >= 10000                 ~300 bytes
 #define IRMP_SUPPORT_KASEIKYO_PROTOCOL          1       // Kaseikyo             >= 10000                 ~250 bytes
-#define IRMP_SUPPORT_DENON_PROTOCOL             1       // DENON, Sharp         >= 10000                 ~250 bytes
 
 // more protocols, enable here!                 Enable  Remarks                 F_INTERRUPTS            Program Space
-#define IRMP_SUPPORT_RC5_PROTOCOL               0       // RC5                  >= 10000                 ~250 bytes
-#define IRMP_SUPPORT_RC6_PROTOCOL               0       // RC6 & RC6A           >= 10000                 ~250 bytes
 #define IRMP_SUPPORT_JVC_PROTOCOL               0       // JVC                  >= 10000                 ~150 bytes
 #define IRMP_SUPPORT_NEC16_PROTOCOL             0       // NEC16                >= 10000                 ~100 bytes
 #define IRMP_SUPPORT_NEC42_PROTOCOL             0       // NEC42                >= 10000                 ~300 bytes
+#define IRMP_SUPPORT_MATSUSHITA_PROTOCOL        0       // Matsushita           >= 10000                  ~50 bytes
+#define IRMP_SUPPORT_DENON_PROTOCOL             0       // DENON, Sharp         >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_RC5_PROTOCOL               0       // RC5                  >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_RC6_PROTOCOL               0       // RC6 & RC6A           >= 10000                 ~250 bytes
 #define IRMP_SUPPORT_IR60_PROTOCOL              0       // IR60 (SDA2008)       >= 10000                 ~300 bytes
 #define IRMP_SUPPORT_GRUNDIG_PROTOCOL           0       // Grundig              >= 10000                 ~300 bytes
 #define IRMP_SUPPORT_SIEMENS_PROTOCOL           0       // Siemens Gigaset      >= 15000                 ~550 bytes
@@ -72,6 +72,8 @@
 #define IRMP_SUPPORT_BOSE_PROTOCOL              0       // BOSE                 >= 10000                 ~150 bytes
 #define IRMP_SUPPORT_KATHREIN_PROTOCOL          0       // Kathrein             >= 10000                 ~200 bytes
 #define IRMP_SUPPORT_NUBERT_PROTOCOL            0       // NUBERT               >= 10000                  ~50 bytes
+#define IRMP_SUPPORT_FAN_PROTOCOL               0       // FAN (ventilator)     >= 10000                  ~50 bytes
+#define IRMP_SUPPORT_SPEAKER_PROTOCOL           0       // SPEAKER (~NUBERT)    >= 10000                  ~50 bytes
 #define IRMP_SUPPORT_BANG_OLUFSEN_PROTOCOL      0       // Bang & Olufsen       >= 10000                 ~200 bytes
 #define IRMP_SUPPORT_RECS80_PROTOCOL            0       // RECS80 (SAA3004)     >= 15000                  ~50 bytes
 #define IRMP_SUPPORT_RECS80EXT_PROTOCOL         0       // RECS80EXT (SAA3008)  >= 15000                  ~50 bytes
@@ -86,29 +88,41 @@
 #define IRMP_SUPPORT_RUWIDO_PROTOCOL            0       // RUWIDO, T-Home       >= 15000                 ~550 bytes
 #define IRMP_SUPPORT_A1TVBOX_PROTOCOL           0       // A1 TV BOX            >= 15000 (better 20000)  ~300 bytes
 #define IRMP_SUPPORT_LEGO_PROTOCOL              0       // LEGO Power RC        >= 20000                 ~150 bytes
-
+#define IRMP_SUPPORT_RCMM_PROTOCOL              0       // RCMM 12,24, or 32    >= 20000                 ~150 bytes
+#define IRMP_SUPPORT_LGAIR_PROTOCOL             0       // LG Air Condition     >= 10000                 ~300 bytes
+#define IRMP_SUPPORT_SAMSUNG48_PROTOCOL         0       // Samsung48            >= 10000                 ~100 bytes (SAMSUNG must be enabled!)
+#define IRMP_SUPPORT_MERLIN_PROTOCOL            0       // Merlin               >= 15000 (better 20000)  ~300 bytes
+#define IRMP_SUPPORT_PENTAX_PROTOCOL            0       // Pentax               >= 10000                 ~150 bytes
+#define IRMP_SUPPORT_S100_PROTOCOL              0       // S100                 >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_ACP24_PROTOCOL             0       // ACP24                >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_TECHNICS_PROTOCOL          0       // TECHNICS             >= 10000                 ~250 bytes
+#define IRMP_SUPPORT_RADIO1_PROTOCOL            0       // RADIO, e.g. TEVION   >= 10000                 ~250 bytes (experimental)
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
- * Change hardware pin here for ATMEL AVR
+ * Change hardware pin here for ATMEL ATMega/ATTiny/XMega
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
-#if defined (ATMEL_AVR)                                                 // use PB6 as IR input on AVR
-#  define IRMP_PORT_LETTER                      D
-#  define IRMP_BIT_NUMBER                       1
+#if defined (ATMEL_AVR) || defined (__AVR_XMEGA__)                      // use PB6 as IR input on AVR
+#  define IRMP_PORT_LETTER                      B
+#  define IRMP_BIT_NUMBER                       6
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
- * Change hardware pin here for PIC C18 compiler
+ * Change hardware pin here for PIC C18 or XC8 compiler
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
-#elif defined (PIC_C18)                                                 // use RB4 as IR input on PIC
-#  define IRMP_PIN                              PORTBbits.RB4
+#elif defined (PIC_C18)                                                 // use RB4 as IR input on PIC (C18 or XC8 compiler)
+#  if defined(__12F1840)
+#    define IRMP_PIN                            RA5                     // on 12F1840 with XC8 compiler
+#  else
+#    define IRMP_PIN                            PORTBbits.RB4           // PIC C18
+#  endif
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
  * Change hardware pin here for PIC CCS compiler
  *---------------------------------------------------------------------------------------------------------------------------------------------------
  */
 #elif defined (PIC_CCS)
-#  define IRMP_PIN                              PIN_B4                  // use PB4 as IR input on PIC
+#  define IRMP_PIN                              PIN_B4                  // use PB4 as IR input on PIC (CCS compiler)
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------
  * Change hardware pin here for ARM STM32
@@ -167,4 +181,4 @@
 #  define IRMP_USE_CALLBACK                     0       // 1: use callbacks. 0: do not. default is 0
 #endif
 
-#endif /* _WC_IRMPCONFIG_H_ */
+#endif // _IRMPCONFIG_H_
