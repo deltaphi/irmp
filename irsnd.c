@@ -499,7 +499,6 @@ irsnd_on (void)
 #    endif // IRSND_OCx
 
 #  else                                                 // AVR
-#ifndef ARDUINO
 #    if   IRSND_OCx == IRSND_OC2                        // use OC2
         TCCR2 |= (1<<COM20)|(1<<WGM21);                 // toggle OC2 on compare match,  clear Timer 2 at compare match OCR2
 #    elif IRSND_OCx == IRSND_OC2A                       // use OC2A
@@ -515,7 +514,6 @@ irsnd_on (void)
 #    else
 #      error wrong value of IRSND_OCx
 #    endif // IRSND_OCx
-#endif // !ARDUINO
 	IRSND_PORT |= (1<<IRSND_BIT);                 // set IRSND_BIT to high
 #  endif // C18
 #endif // ANALYZE
@@ -572,7 +570,6 @@ irsnd_off (void)
 
 #  else //AVR
 
-#ifndef ARDUINO
 #    if   IRSND_OCx == IRSND_OC2                        // use OC2
         TCCR2 &= ~(1<<COM20);                           // normal port operation, OC2 disconnected.
 #    elif IRSND_OCx == IRSND_OC2A                       // use OC2A
@@ -588,7 +585,6 @@ irsnd_off (void)
 #    else
 #      error wrong value of IRSND_OCx
 #    endif // IRSND_OCx
-#endif // !ARDUINO
         IRSND_PORT  &= ~(1<<IRSND_BIT);                 // set IRSND_BIT to low
 #  endif //C18
 #endif // ANALYZE
@@ -788,7 +784,7 @@ irsnd_init (void)
         IRSND_PORT &= ~(1<<IRSND_BIT);                                              // set IRSND_BIT to low
         IRSND_DDR |= (1<<IRSND_BIT);                                                // set IRSND_BIT to output
 
-#ifndef ARDUINO#    if   IRSND_OCx == IRSND_OC2                                                    // use OC2
+#    if   IRSND_OCx == IRSND_OC2                                                    // use OC2
         TCCR2 = (1<<WGM21);                                                         // CTC mode
 #       if AVR_PRESCALER == 8
           TCCR2 |= (1<<CS21);                                                       // start Timer 2, prescaler = 8
@@ -820,7 +816,6 @@ irsnd_init (void)
 #      error wrong value of IRSND_OCx
 #    endif
         irsnd_set_freq (IRSND_FREQ_36_KHZ);                                         // default frequency
-#endif // !ARDUINO
 #  endif //PIC_C18
 #endif // ANALYZE
 }
